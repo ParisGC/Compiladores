@@ -1,0 +1,170 @@
+#+TITLE: Notes
+#+DATE: <2017-02-20 Mon>
+#+AUTHOR: Yann Herklotz
+#+EMAIL: ymherklotz@gmail.com
+#+DESCRIPTION: These are notes about the Compiler project.
+
+* Lexer
+
+** DONE Lab (calculate statistics over text)
+   DEADLINE: <2017-01-31 Tue>
+
+*** Task
+
+    We had to calculate statistics over text. This was to learn about 
+    flex and how to use it.
+
+
+** DONE Coursework (c lexer)
+   DEADLINE: <2017-02-07 Tue>
+
+*** Task
+
+    Design a C lexer that could lex C and output the important information 
+    about the C code. This made us read the C spec for the first time.
+
+* Parser
+
+** DONE Lab (parse maths)
+   DEADLINE: <2017-02-14 Tue>
+
+*** Task
+
+    We had to design a maths parser and then analyse the tree that was 
+    created by parsing it. The additional parts where to differentiate 
+    equations using the different rules for differentiating. We also had to 
+    evaluate the expressions and do other operations on the tree. This taught 
+    us how to use bison.
+
+
+** TODO Coursework (c parser)
+   DEADLINE: <2017-03-07 Tue>
+
+*** Task
+
+*** AST (Abstract Syntax Tree)
+    
+    Finsihed the AST for now, using polymorphism to achieve this. Right now i
+    t achieves the goal of this coursework as it does print out the AST in xml 
+    format and supports all the features that the parser should support. The 
+    expressions branch of the AST is completely bare because they are not needed 
+    for this parser. I will continue working on this AST in the compiler section 
+    so that it supports all the other constructs that I need for the compiler.
+
+*** Grammar
+
+    The grammar is not completely done yet as I dont support all of the declartions 
+    that are possible, and as I add more constructs in the AST I will also have to add 
+    declarations in the bison file. This I will only continue in the Compiler section.
+* Compiler
+** DONE Lab (codegen)
+   DEADLINE: <2017-02-28 Tue>
+
+*** Task
+
+    In this lab we used the setup provided to us to make a compiler for the language
+    specified in the lab. The AST was already built for us and the language was already
+    parsed using C++ instead of bison.
+
+** TODO Coursework (c compiler)
+   DEADLINE: <2017-03-28 Tue>
+
+*** Task    
+*** Mips Assembly
+
+    - %hi(id) :: loads the upper address of the global variable id
+    - %lo(id) :: loads the lower address of the global variable id
+    - addiu :: Add Immediate Unsigned
+    - jr :: Jump Register
+    - li :: Pseudo instruction interpreted as (	lui $rd, LabelAddr[31:16]
+                                                ori $rd,$rd, LabelAddr[15:0] )
+    - lui :: loads uppper immediate.
+    - lw :: Load Word
+    - move :: Pseudo instruction interpreted as (add $rt, $rs, $zero)
+    - nop :: No Operation
+    - sw :: Store Word
+*** TODOs
+
+**** DONE VariableStackBindings class
+
+     The class will contain map of strings containing the variable name as the _key_ and the stack 
+     position as the stack position and type as the attributes, which will be combined using a struct.
+
+**** DONE Work on statements and declaration
+
+     Implement the adding to the bindings part that has to be added in the statements and declarations.
+
+**** DONE Store expression results on the stack
+
+     To do this I created a function in my VariableStackBindings that will store the 
+     position of the stack that will be used for the next expression.
+**** DONE Reformat code
+**** DONE Work on expression
+     CLOCK: [2017-03-15 Wed 21:00]--[2017-03-16 Thu 00:39] =>  3:39
+
+      Add more expression.
+
+**** DONE Make functions work
+***** DONE Make function calls work from expressions
+***** DONE Make functions receive arguments
+      - Work on bison file to get the parameters correctly
+      - Work on storing them correctly in the binding
+**** TODO Comment code
+
+     comment code to know where I am at and what I still have to do.
+**** DONE Definition class 
+
+     - need function that will print the code for declaration. Basic code should be:
+       
+       li    $2, 6
+       sw    $2, 4($fp)
+
+     - Before that is executed it should evaluate the expression.
+
+     - The expression should be the thing doing: li    $2, 6
+       That is if we want a 6 stored in the variable.
+
+     - The declaration class should only be in charge of storing it in the right location in
+       the stack and adding that to the bindings.
+**** DONE Add more expressions
+     CLOCK: [2017-03-17 Fri 17:08]--[2017-03-17 Fri 20:59] =>  3:51
+     CLOCK: [2017-03-17 Fri 13:21]--[2017-03-17 Fri 15:43] =>  2:22
+     
+     Expressions like > or < or == etc..
+
+**** DONE Add more statements
+***** DONE If statement
+      CLOCK: [2017-03-18 Sat 08:42]--[2017-03-18 Sat 09:57] =>  1:15
+***** DONE For statement
+***** DONE While statement
+***** TODO Do While statement
+**** DONE Fixing Seg fault 1
+     CLOCK: [2017-03-17 Fri 15:44]--[2017-03-17 Fri 16:00] =>  0:16
+
+     Have to fix type assigment for declaration lists, need to make new pointers of the right type.
+**** DONE Load more that 4 bytes into a variable.
+**** DONE Fix expressions and temporary variables
+
+     I have to store the temporary expression in normal registers.
+
+**** DONE Convert cout to printf
+
+     convert all cout to printf
+     
+**** DONE Add global variables
+
+     Change code so that it also prints global variables. This should be done with 
+     the globalAsm function.
+
+     I might have to change the print Asm and the global Asm function in the declarations.
+**** DONE Add post and pre increment
+     CLOCK: [2017-03-20 Mon 15:12]
+
+     For post increment I will have a special class that handles that, 
+     for pre increment I will rewrite in terms of addition, which should be possible.
+**** DONE Arrays
+     Finished arrays
+
+**** DONE Pointers
+     Finished pointers
+**** TODO Add initializer list count of expression depth
